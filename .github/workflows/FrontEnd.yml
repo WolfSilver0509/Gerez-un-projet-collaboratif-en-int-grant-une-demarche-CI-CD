@@ -1,0 +1,59 @@
+name: Frontend Workflow
+
+on:
+  push:
+    branches: 
+      - CI-CD-P10
+  pull_request:
+    branches: 
+      - CI-CD-P10
+
+jobs:
+  Frontend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: front
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Run 🚀 npm install 
+        run: npm install 
+
+      - name: Run ✈️ npm test
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
+      
+      - name: Run 📖 Coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: karma-report
+          path: front/coverage
+
+  SonarCloudFrontEnd:
+    runs-on: ubuntu-latest
+    needs: Frontend
+    defaults:
+      run:
+        working-directory: front
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
