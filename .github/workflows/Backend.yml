@@ -3,10 +3,10 @@ name: Backend Workflow
 on:
   push:
     branches: 
-      - CI-CD-10
+      - CI-CD-P10
   pull_request:
     branches: 
-      - CI-CD-10
+      - CI-CD-P10
 
 jobs:
   BackEnd:
@@ -74,5 +74,5 @@ jobs:
       - name: Build and analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mydmoov_sonarcloud-p10-back
