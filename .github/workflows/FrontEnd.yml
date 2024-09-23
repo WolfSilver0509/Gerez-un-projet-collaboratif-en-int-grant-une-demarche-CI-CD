@@ -34,13 +34,12 @@ jobs:
 
       - name: Run ✈️ npm test
         run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
-
-     
-      - name: Upload Coverage report
+      
+      - name: Run 📖 Coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: karma-report 
-          path: front/coverage/lcov-report/
+          name: karma-report
+          path: front/coverage
 
   SonarCloudFrontEnd:
     runs-on: ubuntu-latest
@@ -48,13 +47,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-     
-      - name: Download coverage artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: karma-report 
-          path: front/coverage/lcov-report/
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -76,8 +68,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
         with:
           projectBaseDir: front
-          sonar.javascript.lcov.reportPaths: front/coverage/lcov-report/lcov.info 
-
+  
   DockerLogAndBuild:
     runs-on: ubuntu-latest
     needs : SonarCloudFrontEnd
