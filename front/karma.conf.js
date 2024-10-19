@@ -1,6 +1,3 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
-
 module.exports = function (config) {
   config.set({
     basePath: '',
@@ -14,22 +11,20 @@ module.exports = function (config) {
     ],
     client: {
       jasmine: {
-        // you can add configuration options for Jasmine here
-        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
-        // for example, you can disable the random execution with `random: false`
-        // or set a specific seed with `seed: 4321`
+        // Configuration optionnelle pour Jasmine
       },
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false // laisser visible la sortie du Jasmine Spec Runner dans le navigateur
     },
     jasmineHtmlReporter: {
-      suppressAll: true // removes the duplicated traces
+      suppressAll: true // supprimer les traces dupliquées
     },
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/bobapp'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'html' },         // Génère un rapport HTML lisible localement
+        { type: 'text-summary' },  // Génère un résumé texte de la couverture
+        { type: 'lcov' }           // Ajoute un rapport LCOV nécessaire pour SonarCloud
       ]
     },
     reporters: ['progress', 'kjhtml'],

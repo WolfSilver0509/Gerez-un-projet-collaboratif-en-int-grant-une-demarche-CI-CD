@@ -21,7 +21,7 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         
       - name: Use Node.js ${{ matrix.node-version }}
@@ -29,21 +29,22 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Run 🚀 npm install 
+      - name: Install dependencies
         run: npm install 
 
-      - name: Run ✈️ npm test
+      - name: Run tests and generate coverage
         run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
-      
-      - name: Run 📖 Coverage report
+
+      - name: Upload Karma coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: karma-report
+          name: karma-coverage-report
           path: front/coverage
 
   SonarCloudFrontEnd:
     runs-on: ubuntu-latest
     needs: Frontend
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
