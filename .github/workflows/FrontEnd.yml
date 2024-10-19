@@ -74,6 +74,7 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
+            -Dsonar.organization=wolfsilver0509
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
 
   DockerLogAndBuild:
