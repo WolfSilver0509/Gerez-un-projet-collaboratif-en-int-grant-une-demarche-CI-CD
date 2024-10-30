@@ -21,29 +21,37 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4 
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm install 
+      - name: NPM clean install
+        working-directory: front
+        run: npm ci
 
-      - name: Run tests and generate coverage
-        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
+      - name: build the project
+        working-directory: front
+        run: npm run build
 
-      # Nouvelle étape pour lister les fichiers du dossier coverage et vérifier que lcov.info est bien généré
-      - name: List coverage files
-        run: ls -R coverage
-
-      - name: Upload Karma coverage report
-        uses: actions/upload-artifact@v4
+      - name: Unit tests
+        working-directory: front
+        run: |
+          npm install -g @angular/cli
+          ng test --browsers ChromeHeadless --watch=false
+      
+      - name: Coverage tests
+        working-directory: front
+        run: |
+          npm install -g @angular/cli
+          ng test --code-coverage --browsers ChromeHeadless --watch=false
+      
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
         with:
-          name: karma-coverage-report
-          path: coverage  
+          name: code-coverage-report
+          path: front/coverage/bobapp/  
 
   SonarCloudFrontEnd:
     runs-on: ubuntu-latest
@@ -54,24 +62,39 @@ jobs:
         working-directory: front
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Run tests and generate coverage
-        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
-        
-      - name: SonarCloud Scan Frontend
+          node-version: ${{ matrix.node-version }}
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: NPM clean install
+        working-directory: front
+        run: npm ci
+
+      - name: Coverage tests
+        working-directory: front
+        run: |
+          npm install -g @angular/cli
+          ng test --code-coverage --watch=false --browsers ChromeHeadless
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: front
+          args: >
+            -Dsonar.projectName="Bob_APP_FRONT"
+            -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
+            -Dsonar.organization=wolfsilver0509
+            -Dsonar.qualitygate.wait=true
+            -Dsonar.javascript.lcov.reportPaths=/coverage/bobapp/lcov.info
         env:
           SONAR_TOKEN: ${{  secrets.SONAR_TOKEN_FRONT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          npx sonarqube-scanner -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
-      
+  
   DockerLogAndBuild:
     runs-on: ubuntu-latest
     needs: SonarCloudFrontEnd
