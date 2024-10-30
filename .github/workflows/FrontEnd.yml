@@ -49,6 +49,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: Frontend
 
+    defaults:
+      run:
+        working-directory: front
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -60,11 +64,10 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: front
+        
 
-      - name: Build Angular project
-        run: npm run build -- --configuration production --base-href="./"
-        working-directory: front
+      - name: Run tests and generate coverage
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
 
       - name: Analyze with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
