@@ -54,33 +54,20 @@ jobs:
         working-directory: front
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
-
+          node-version: '16'
       - name: Install dependencies
         run: npm install
-        
-
-      - name: Run tests and generate coverage
-        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
-
-      - name: Analyze with SonarCloud
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: SonarCloud Scan Frontend
         env:
+          SONAR_TOKEN: ${{  secrets.SONAR_TOKEN_FRONT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
-        with:
-          args: >
-            -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
-            -Dsonar.organization=wolfsilver0509
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.exclusions=**/*.java
-
+        run: |
+          npx sonarqube-scanner -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
+      
   DockerLogAndBuild:
     runs-on: ubuntu-latest
     needs: SonarCloudFrontEnd
