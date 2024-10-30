@@ -90,7 +90,7 @@ jobs:
             -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
             -Dsonar.organization=wolfsilver0509
             -Dsonar.qualitygate.wait=true
-            -Dsonar.javascript.lcov.reportPaths=/coverage/bobapp/lcov.info
+            -Dsonar.typescript.lcov.reportPaths=/coverage/bobapp/lcov.info
         env:
           SONAR_TOKEN: ${{  secrets.SONAR_TOKEN_FRONT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
