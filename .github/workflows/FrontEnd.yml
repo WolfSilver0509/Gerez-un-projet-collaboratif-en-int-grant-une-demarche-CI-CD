@@ -61,6 +61,10 @@ jobs:
           node-version: '16'
       - name: Install dependencies
         run: npm install
+      
+      - name: Run tests and generate coverage
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
+        
       - name: SonarCloud Scan Frontend
         env:
           SONAR_TOKEN: ${{  secrets.SONAR_TOKEN_FRONT }}
