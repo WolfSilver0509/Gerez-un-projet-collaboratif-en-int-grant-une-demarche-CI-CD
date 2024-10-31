@@ -73,6 +73,12 @@ jobs:
       - name: Build Angular project
         run: npm run build -- --configuration production --base-href="./"
         working-directory: front
+      
+      - name: Coverage tests
+        working-directory: front
+        run: |
+          npm install -g @angular/cli
+          ng test --code-coverage --browsers ChromeHeadless --watch=false
 
       - name: Analyze Frontend with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
