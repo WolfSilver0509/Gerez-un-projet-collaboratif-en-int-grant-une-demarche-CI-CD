@@ -75,9 +75,8 @@ jobs:
         working-directory: front
       
       - name: Coverage tests
+        run: npm run test --code-coverage --browsers ChromeHeadless --watch=false
         working-directory: front
-        run: |
-          ng test --code-coverage --browsers ChromeHeadless --watch=false
 
       - name: Analyze Frontend with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
