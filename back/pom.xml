@@ -18,7 +18,7 @@
 		  <sonar.organization>wolfsilver0509</sonar.organization>
   			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		 <sonar.projectKey>mydmoov_sonarcloud-p10-back</sonar.projectKey>
-    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <!-- <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths> -->
 	</properties>
 	<dependencies>
 		<dependency>
