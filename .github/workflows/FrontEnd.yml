@@ -53,9 +53,10 @@ jobs:
           name: code-coverage-report
           path: front/coverage/bobapp/  
           
-  SonarCloudAnalysis:
+  SonarCloudAnalyseFront:
     name: Sonar cloud analyse front
     runs-on: ubuntu-latest
+    needs: Frontend
 
     defaults:
       run:
@@ -100,7 +101,7 @@ jobs:
   
   DockerLogAndBuild:
     runs-on: ubuntu-latest
-    needs: SonarCloudAnalysis
+    needs: SonarCloudAnalyseFront
     defaults:
       run:
         working-directory: ${{ github.workspace }}/front
