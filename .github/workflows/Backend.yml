@@ -4,9 +4,11 @@ on:
   push:
     branches: 
       - CI-CD-P10
+      - CI-CD-STEP
   pull_request:
     branches: 
       - CI-CD-P10
+      - CI-CD-STEP
 
 jobs:
   BackEnd:
