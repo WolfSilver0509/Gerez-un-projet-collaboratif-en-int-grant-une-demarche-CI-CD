@@ -77,7 +77,6 @@ jobs:
       - name: Coverage tests
         working-directory: front
         run: |
-          npm install -g @angular/cli
           ng test --code-coverage --browsers ChromeHeadless --watch=false
 
       - name: Analyze Frontend with SonarCloud
