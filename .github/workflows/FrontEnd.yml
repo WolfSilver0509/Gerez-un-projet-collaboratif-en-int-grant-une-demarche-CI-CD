@@ -83,8 +83,8 @@ jobs:
           args: >
             -Dsonar.projectKey=mydmoov_sonarcloud-p10-front
             -Dsonar.organization=wolfsilver0509
-            -Dsonar.sources=src
-            -Dsonar.tests=src
+            -Dsonar.sources=front
+            -Dsonar.tests=front/src
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/coverage/**,**/src/environments/**
