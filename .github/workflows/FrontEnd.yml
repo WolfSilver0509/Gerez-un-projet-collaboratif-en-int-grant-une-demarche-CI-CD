@@ -4,12 +4,17 @@ on:
   push:
     branches: 
       - CI-CD-P10
+
+#      opened : déclenché lorsqu'une pull request est ouverte pour la première fois.
+#      synchronize : déclenché lorsqu'une pull request existante reçoit de nouveaux commits, comme lors d'un rebase ou d'une mise à jour de la branche.
+#      reopened : déclenché lorsqu'une pull request précédemment fermée est rouverte.
+
   pull_request:
-    branches: 
-      - CI-CD-P10
+    types: [opened, synchronize, reopened]
 
 jobs:
   Frontend:
+    name: Frontend Test and coverage
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -95,6 +100,15 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx sonar-scanner \
+          -Dsonar.projectKey=did-bdx_OCP10-frontend \
+          -Dsonar.sources=. \
+          -Dsonar.projectName=OCP10-front-sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=wolfsilver0509 \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN_FRONT }} \
+          -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info  # Chemin vers le rapport de couverture LCOV
 
   
   DockerLogAndBuild:
