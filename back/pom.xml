@@ -14,14 +14,14 @@
 	<name>bobapp</name>
 	<description>L'application de joke par excellence !</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<sonar.organization>wolfsilver0509</sonar.organization>
-  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		  <sonar.projectKey>mydmoov_sonarcloud-p10-back</sonar.projectKey>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.projectKey>mydmoov_sonarcloud-p10-back</sonar.projectKey>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 		<sonar.coverage.jacoco.xmlReportPaths>
-    		../back/target/site/jacoco/jacoco.xml
-  		</sonar.coverage.jacoco.xmlReportPaths>
+			../back/target/site/jacoco/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -51,7 +51,6 @@
 				<version>0.8.5</version>
 				<executions>
 					<execution>
-						<id>before-test-execution</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
