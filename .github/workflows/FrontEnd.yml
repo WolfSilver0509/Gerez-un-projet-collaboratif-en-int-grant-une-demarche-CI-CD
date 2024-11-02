@@ -94,9 +94,7 @@ jobs:
           path: front/coverage
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: front
+        working-directory: front
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
