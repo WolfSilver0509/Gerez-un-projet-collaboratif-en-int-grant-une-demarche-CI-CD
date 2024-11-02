@@ -43,7 +43,7 @@ jobs:
   SonarCloud-Frontend:
     name: Analyse avec SonarCloud (Frontend)
     runs-on: ubuntu-latest
-    needs: [Frontend-Test]
+    needs: [Frontend]
 
     steps:
       - name: Checkout code
