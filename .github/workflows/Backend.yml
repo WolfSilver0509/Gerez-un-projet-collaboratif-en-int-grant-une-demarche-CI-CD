@@ -47,7 +47,7 @@ jobs:
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mydmoov_sonarcloud-p10-back -f pom.xml
       working-directory: back
 
-    - uses: actions/upload-artifact@v2  # upload test results
+    - uses: actions/upload-artifact@v3  
       with:
         name: test-results
         path: ${{ github.workspace }}/back/target/site/jacoco
