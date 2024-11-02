@@ -48,7 +48,7 @@ jobs:
 
   DockerLogAndBuild:
     runs-on: ubuntu-latest
-    needs: SonarCloud-Frontend
+    needs: Frontend
     defaults:
       run:
         working-directory: ${{ github.workspace }}/front
