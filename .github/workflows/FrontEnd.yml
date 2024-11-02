@@ -106,13 +106,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx sonar-scanner \
-          -Dsonar.projectKey=did-bdx_OCP10-frontend \
+          -Dsonar.projectKey=mydmoov_sonarcloud-p10-front \
           -Dsonar.sources=. \
           -Dsonar.projectName=OCP10-front-sonar \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=wolfsilver0509 \
           -Dsonar.token=${{ secrets.SONAR_TOKEN_FRONT }} \
-          -Dsonar.javascript.lcov.reportPaths=coverage/bobapp/lcov.info  # Chemin vers le rapport de couverture LCOV
+          -Dsonar.javascript.lcov.reportPaths=front/coverage/bobapp/lcov.info 
 
   
   DockerLogAndBuild:
