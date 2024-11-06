@@ -6,14 +6,14 @@ on:
       - feature/workflow
     paths:
       - 'back/**'
-      - '.github/workflows/**'
+
 
   pull_request:
     branches:
       - main
     paths:
       - 'back/**'
-      - '.github/workflows/**'
+      
 
 jobs:
   Build_Test_Coverage_Analyse:
