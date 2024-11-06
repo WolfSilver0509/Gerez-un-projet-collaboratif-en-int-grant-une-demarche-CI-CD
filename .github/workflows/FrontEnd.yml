@@ -2,12 +2,17 @@ name: Frontend Workflow
 
 on:
   push:
-    branches: 
-      - CI-CD-P10
+    branches:
+      - feature/workflow
+    paths:
+      - 'front/**'
+
+
   pull_request:
     branches:
       - main
-    types: [opened, synchronize, reopened]
+    paths:
+      - 'front/**'
 
 jobs:
   Frontend:
