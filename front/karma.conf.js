@@ -10,7 +10,7 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
     ],
     client: {
       jasmine: {
@@ -28,8 +28,9 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage/bobapp'),
       subdir: '.',
       reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'lcov' },
+        { type: 'text-summary' },
+        { type: 'cobertura' }
       ]
     },
     reporters: ['progress', 'kjhtml'],
@@ -37,8 +38,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false,
-    restartOnFileChange: true
+    browsers: ['ChromeHeadless'],
+    singleRun: true,
+    restartOnFileChange: false
   });
 };
