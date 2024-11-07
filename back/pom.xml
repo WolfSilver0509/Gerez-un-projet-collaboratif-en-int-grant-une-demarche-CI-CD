@@ -24,6 +24,7 @@
 		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<!--Rajouts des informations pour sonnar dans le pom.xml  pom.xml  -->
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
