@@ -15,6 +15,7 @@
 	<description>L'application de joke par excellence !</description>
 	<properties>
 		<java.version>11</java.version>
+		<!--Rajouts des informations pour sonnar dans le pom.xml -->
 		<sonar.organization>wolfsilver0509</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.projectKey>mydmoov_sonarcloud-p10-back</sonar.projectKey>
