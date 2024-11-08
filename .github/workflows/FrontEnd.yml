@@ -40,6 +40,9 @@ jobs:
       # Étape 1 : Check-out du code source du dépôt
       - name: Check-out
         uses: actions/checkout@v3
+        with:
+         fetch-depth: 0
+
 
       # Étape 2 : Configuration de Node.js avec la version spécifiée
       - name: Utilisation de Node.js ${{ matrix.node-version }}
