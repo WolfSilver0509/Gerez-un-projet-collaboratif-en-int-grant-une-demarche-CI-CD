@@ -114,11 +114,39 @@ Jobs du workflow
 ## 📍 Ajout des KPIs (via SonarCloud et des Quality Gates)
 Ajout de KPIs (Key Performance Indicators) au projet via des Quality Gates.
 
-### KPI num 1: Coverage 📌
-Le KPI num 1 est la couverture de code. Il est mesuré par JaCoCo et affiché dans SonarCloud. Le Quality Gate pour ce KPI est de 80%. Ca signifie que le code doit avoir une couverture de code de 80% ou plus pour passer le Quality Gate.
+### 1. Couverture de Tests - Code Coverage 📌
+**KPI proposé** : Taux minimal de couverture des tests unitaires : 80%
 
-### KPI num 2: Security hotspots Reviewed 📌
-Le KPI num 3 est le nombre de Security Hotspots Reviewed. Un Security Hotspot est un indicateur de risque potentiel dans le code qui nécessite une attention particulière pour garantir qu'il ne devienne pas une vulnérabilité de sécurité.
+**Justification** : Le taux de couverture des tests est essentiel pour assurer la qualité et la fiabilité du code. Dans les analyses SonarCloud, nous constatons une couverture de 83.3% pour le front-end, tandis que le back-end est à un faible niveau de 38.8%, bien en dessous du seuil minimum de 80%. Ce KPI de 80% garantit que le code est suffisamment couvert par des tests unitaires, réduisant ainsi le risque de régressions et de bugs non détectés. Ce niveau de couverture est également un standard de qualité dans l’industrie pour les projets bien testés.
+
+
+### 2. Note de Fiabilité - Reliability Rating 📌
+**KPI proposé** : Note minimale de fiabilité (Reliability Rating) : A
+
+**Justification** : La fiabilité du code est un indicateur important de la stabilité et de la maintenabilité du projet. Dans l'analyse SonarCloud du back-end, la note de fiabilité est insuffisante, ce qui a conduit à un échec de la Quality Gate. Une note A garantit que le code ne contient que très peu (ou aucun) bug critique ou bloquant, ce qui améliore la robustesse globale et réduit les risques en production. Fixer ce KPI incite les équipes à maintenir un niveau de fiabilité élevé.
+
+
+### 3. Examen des Hotspots de Sécurité - Security Hotspots Reviewed 📌
+**KPI proposé** : Taux minimal d'examen des hotspots de sécurité : 100%
+
+**Justification** : Les hotspots de sécurité identifient des sections de code qui peuvent présenter des vulnérabilités potentielles. Dans le back-end, nous voyons que 0% des hotspots de sécurité ont été examinés, et deux hotspots sont actuellement présents, ce qui représente une vulnérabilité pour la sécurité du projet. Un taux de 100% pour ce KPI garantit que chaque hotspot détecté est analysé et corrigé si nécessaire, assurant que le code est exempt de risques majeurs pour la sécurité.
+
+
+### 4. Taux de Duplication du Code - Code Duplication 📌
+**KPI proposé** : Taux maximal de duplication du code : 3%
+
+**Justification** : La duplication de code peut rendre le projet difficile à maintenir et accroître le risque d’incohérences lors des modifications. Actuellement, les analyses montrent un taux de duplication de 0% pour les deux projets (back-end et front-end), ce qui est un point positif. Fixer un maximum de 3% pour ce KPI permet d'encadrer les pratiques de développement tout en offrant une certaine flexibilité. Un faible taux de duplication améliore la maintenabilité du code et évite la propagation d'erreurs à travers des duplications non contrôlées.
+
+
+## Résumé des KPIs proposés
+
+| **KPI**                             | **Seuil** | **Justification**                                                                       |
+|-------------------------------------|-----------|-----------------------------------------------------------------------------------------|
+| **Couverture de tests**             | ≥ 80%     | Réduit les risques de bugs non détectés et améliore la robustesse des tests.            |
+| **Note de fiabilité**               | A         | Assure la stabilité et maintenabilité du projet.                                        |
+| **Examen des hotspots de sécurité** | 100%      | Garantit la sécurité en analysant tous les points critiques identifiés.                 |
+| **Taux de duplication**             | ≤ 3%      | Améliore la maintenabilité et réduit les incohérences dans le code.                     |
+
 
 
 ## 📊 Analyse des metriques et retours utilisateurs
@@ -149,7 +177,7 @@ Le KPI num 3 est le nombre de Security Hotspots Reviewed. Un Security Hotspot es
 
 #### 🙋‍♂️ Retours utilisateurs 👥
 
-![avis bobapp](.images/avis-bobapp.png)
+![avis bobapp](.images/avis-bobapp.PNG)
 
 
 #### "Je mets une étoile car je ne peux pas en mettre zéro ! Impossible de poster une suggestion de blague, le bouton tourne et fait planter mon navigateur"
