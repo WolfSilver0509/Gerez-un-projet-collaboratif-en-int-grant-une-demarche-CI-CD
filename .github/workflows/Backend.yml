@@ -34,6 +34,8 @@ jobs:
       # Étape 1 : Check-out du code source du dépôt
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+         fetch-depth: 0
 
       # Étape 2 : Configuration de Java JDK 17
       - name: Set up JDK 17
