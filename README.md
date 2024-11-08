@@ -149,7 +149,7 @@ Le KPI num 3 est le nombre de Security Hotspots Reviewed. Un Security Hotspot es
 
 #### 🙋‍♂️ Retours utilisateurs 👥
 
-![avis bobapp](.images/avis-bobapp.png)
+![avis bobapp](.images/avis-bobapp.PNG)
 
 
 #### "Je mets une étoile car je ne peux pas en mettre zéro ! Impossible de poster une suggestion de blague, le bouton tourne et fait planter mon navigateur"
