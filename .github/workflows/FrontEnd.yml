@@ -1,88 +1,121 @@
+# Frontend Workflow
+# Ce fichier de configuration GitHub Actions permet de définir un workflow pour automatiser les processus
+# d'intégration et de déploiement continu (CI/CD) pour le dossier frontend de BobApp. Il est déclenché lors de
+# pushs sur une branch dev  et de pull requests sur une branch main.
+
 name: Frontend Workflow
 
 on:
+  # Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "front"
   push:
     branches:
-      - feature/workflow
+      - feature/workflow-app
     paths:
       - 'front/**'
 
-
+  # Déclenche le workflow lors d'une pull request vers la branche "main" dans le dossier "front"
   pull_request:
     branches:
       - main
-    types: [opened, synchronize]
     paths:
       - 'front/**'
 
 jobs:
-  Frontend:
+  # Job pour la construction, les tests, le rapport de couverture, et l'analyse SonarCloud
+  Build_Test_Coverage_Analyse:
+    # Utilise l'image Ubuntu la plus récente
     runs-on: ubuntu-latest
 
+    # Définition du répertoire de travail par défaut
     defaults:
       run:
         working-directory: front
+
+    # Stratégie de configuration pour différentes versions de Node.js
     strategy:
       matrix:
         node-version: [14.x]
 
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: front/package.json
+      # Étape 1 : Check-out du code source du dépôt
+      - name: Check-out
+        uses: actions/checkout@v3
 
-    - run: npm ci
-    - run: npm build
-    - run: npm test --no-watch --browsers=ChromeHeadless --code-coverage
+      # Étape 2 : Configuration de Node.js avec la version spécifiée
+      - name: Utilisation de Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          # Cache des dépendances npm basées sur le fichier package.json
+          cache-dependency-path: front/package.json
 
-    - name: Archive code coverage results
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage-report
-        path: ${{ github.workspace }}/front/coverage/bobapp/**
+      # Étape 3 : Installation des dépendances npm
+      - name: Installation des dépendances
+        run: npm ci
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: front
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
+      # Étape 4 : Compilation du projet
+      - name: Compilation du projet
+        run: npm build
 
+      # Étape 5 : Exécution des tests avec Chrome en mode headless et génération de la couverture de code
+      - name: Lancement des tests
+        run: npm test --no-watch --browsers=ChromeHeadless --code-coverage
+
+      # Étape 6 : Archivage des résultats de la couverture de code pour être accessible depuis GitHub
+      - name: Archive des résultats de couverture de code
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: ${{ github.workspace }}/front/coverage/bobapp/**
+
+      # Étape 7 : Analyse de code avec SonarCloud pour évaluer la qualité du code
+      - name: Scan SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: front
+        env:
+          # Variables d'environnement pour l'authentification SonarCloud et GitHub
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
+
+  # Job secondaire pour la création et le push de l'image Docker
   DockerLogAndBuild:
+    # Condition : Exécute ce job uniquement pour une pull request vers la branche "main"
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    # Utilise également une image Ubuntu
     runs-on: ubuntu-latest
-    needs: Frontend
+
+    # Ce job dépend de la complétion du job "Build_Test_Coverage_Analyse"
+    needs: Build_Test_Coverage_Analyse
     defaults:
       run:
         working-directory: ${{ github.workspace }}/front
 
     steps:
-      - uses: actions/checkout@v4
+      # Étape 1 : Check-out du code source pour le job Docker
+      - name: checkout
+        uses: actions/checkout@v4
 
-      - name: Cache Docker layers
+      # Étape 2 : Mise en cache des couches Docker pour accélérer les builds successifs
+      - name: Mise en cache des couches Docker
         uses: actions/cache@v3
         with:
-           path: /tmp/.docker-cache
-           key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-           restore-keys: |
-             ${{ runner.os }}-docker-
+          path: /tmp/.docker-cache
+          # Utilisation de l'OS et du hash du Dockerfile pour la clé de cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
 
-      - name: Login to Docker Hub
+      # Étape 3 : Connexion à Docker Hub avec les informations d'authentification stockées dans les secrets
+      - name: Connexion à Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASS }}
 
-      - name: Build and push frontend Docker image
+      # Étape 4 : Construction et push de l'image Docker du frontend vers Docker Hub
+      - name: Construire et push de l'image Docker du frontend
         run: |
           docker build -t bobapp-front .
           docker tag bobapp-front ${{ secrets.DOCKER_USERNAME }}/bobapp-front:latest
