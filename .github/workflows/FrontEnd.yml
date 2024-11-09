@@ -7,11 +7,11 @@ name: Frontend Workflow
 
 on:
   # Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "front"
-  push:
-    branches:
-      - feature/workflow-app
-    paths:
-      - 'front/**'
+#  push:
+#    branches:
+#      - feature/workflow-app
+#    paths:
+#      - 'front/**'
 
   # Déclenche le workflow lors d'une pull request vers la branche "main" dans le dossier "front"
   pull_request:
