@@ -7,11 +7,11 @@ name: Backend Workflow
 
 on:
 #   Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "back" pour tester pendant le developpement
-  push:
-    branches:
-      - main
-    paths:
-      - 'back/**'
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'back/**'
 
   # Déclenche le workflow lors d'une pull request vers la branche "main" dans le dossier "back"
   pull_request:
