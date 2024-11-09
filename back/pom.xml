@@ -24,6 +24,7 @@
 		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<!--Rajouts des informations pour sonnar dans le pom.xml  -->
+	<!-- Commentaire pour lancer la pipeline demonstration  -->
 
 	<dependencies>
 		<dependency>

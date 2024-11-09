@@ -6,10 +6,10 @@
 name: Backend Workflow
 
 on:
-  # Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "back"
+#   Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "back" pour tester pendant le developpement
   push:
     branches:
-      - feature/workflow-app
+      - main
     paths:
       - 'back/**'
 
