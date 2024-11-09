@@ -6,7 +6,7 @@
 name: Frontend Workflow
 
 on:
-  # Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "front"
+  # Déclenche le workflow lors d'un push sur la branche "feature/workflow" dans le dossier "front" pour tester pendant le developpement 
 #  push:
 #    branches:
 #      - feature/workflow-app
