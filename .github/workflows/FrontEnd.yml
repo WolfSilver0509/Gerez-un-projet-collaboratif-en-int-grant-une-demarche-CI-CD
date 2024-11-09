@@ -13,7 +13,6 @@ on:
 #    paths:
 #      - 'front/**'
 
-
   # Déclenche le workflow lors d'une pull request vers la branche "main" dans le dossier "front"
   pull_request:
     branches:
