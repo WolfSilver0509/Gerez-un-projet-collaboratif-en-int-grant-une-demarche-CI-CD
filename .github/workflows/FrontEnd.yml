@@ -81,6 +81,7 @@ jobs:
           # Variables d'environnement pour l'authentification SonarCloud et GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
+          SONAR_BRANCH_NAME: main
 
   # Job secondaire pour la création et le push de l'image Docker
   DockerLogAndBuild:
