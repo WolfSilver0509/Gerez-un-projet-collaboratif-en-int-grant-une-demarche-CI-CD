@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - feature/workflow-app
-      - main
     paths:
       - 'front/**'
 
