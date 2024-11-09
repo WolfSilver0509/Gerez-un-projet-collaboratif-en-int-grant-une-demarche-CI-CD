@@ -138,6 +138,9 @@ Ajout de KPIs (Key Performance Indicators) au projet via des Quality Gates.
 **Justification** : La duplication de code peut rendre le projet difficile à maintenir et accroître le risque d’incohérences lors des modifications. Actuellement, les analyses montrent un taux de duplication de 0% pour les deux projets (back-end et front-end), ce qui est un point positif. Fixer un maximum de 3% pour ce KPI permet d'encadrer les pratiques de développement tout en offrant une certaine flexibilité. Un faible taux de duplication améliore la maintenabilité du code et évite la propagation d'erreurs à travers des duplications non contrôlées.
 
 
+![sonar cloud front](.images/global.PNG)
+
+
 ## Résumé des KPIs proposés
 
 | **KPI**                             | **Seuil** | **Justification**                                                                       |
