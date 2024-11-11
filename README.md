@@ -80,32 +80,6 @@ Le fichier `pom.xml` fourni dans le projet, contient la configuration de JaCoCo.
 
 ## 🌐 Workflow pour le FrontEnd
 
-Ce workflow GitHub Actions est conçu pour automatiser les tâches liées au développement frontend d'une application nommée "Bobapp". Il couvre les étapes allant de la construction et des tests à la création et au déploiement d'une image Docker.
-
-#### Déclencheurs du workflow:
-
-* Push sur la branche CI-CD-P10: Le workflow entier est déclenché lorsqu'un nouveau commit est poussé sur cette branche.
-* Pull request : ouvert, synchronisé, réouvert: Le job Frontend est déclenché lors de ces événements sur une pull request.
-Jobs du workflow
-
-#### Frontend
-* Configuration de Node.js: Utilise la version 14.x de Node.js pour un environnement de build cohérent.
-* Installation des dépendances: Exécute npm ci pour installer les dépendances du projet.
-* Build: Exécute npm build pour compiler l'application frontend.
-* Tests: Exécute npm test pour lancer les tests unitaires.
-* Couverture de code: Collecte les résultats de la couverture de code pour évaluer la qualité du code.
-* Analyse SonarCloud: Envoie le code à SonarCloud pour une analyse approfondie de la qualité et de la sécurité.
-
-#### DockerLogAndBuild
-
-* Connexion à Docker Hub: Se connecte au registre Docker Hub à l'aide des informations d'identification fournies.
-* Build et push de l'image: Construit une image Docker de l'application frontend, la tague avec un nom spécifique et la pousse vers Docker Hub.
-* Étapes clés et explications
-* Matrix: Permet de tester le workflow avec différentes versions de Node.js (bien que seule la version 14.x soit définie dans cet exemple).
-* Caching: Cache les dépendances npm pour accélérer les builds ultérieurs.
-* Artifacts: Archive les résultats de la couverture de code pour une inspection ultérieure.
-* SonarCloud: Intègre SonarCloud pour analyser la qualité du code et identifier les potentiels problèmes.
-* Docker: Crée une image Docker pour faciliter le déploiement de l'application dans un environnement de conteneur.
 
 ## 🧭 Workflow pour le BackEnd
 
@@ -150,9 +124,20 @@ Ajout de KPIs (Key Performance Indicators) au projet via des Quality Gates.
 | **Examen des hotspots de sécurité** | 100%      | Garantit la sécurité en analysant tous les points critiques identifiés.                 |
 | **Taux de duplication**             | ≤ 3%      | Améliore la maintenabilité et réduit les incohérences dans le code.                     |
 
+## 💪 Possibilités de Modification des Paramètres pour SonarCloud Quality Gates
+Dans SonarCloud, les quality gates offrent une grande flexibilité pour personnaliser les seuils de qualité en fonction des objectifs de l’équipe. Par exemple, Bob peut ajuster les paramètres des quality gates pour répondre aux besoins spécifiques de BobApp et encourager des pratiques de développement plus rigoureuses.
 
+* **Couverture de Tests** : Bob peut configurer le seuil minimal de couverture des tests unitaires, actuellement recommandé à 80%, pour s'assurer que le code est suffisamment vérifié. En ajustant ce pourcentage, il peut s'adapter à l’évolution du projet, notamment en augmentant ce seuil à mesure que la stabilité devient cruciale dans les phases avancées du projet.
 
-## 📊 Analyse des metriques et retours utilisateurs
+* **Note de Fiabilité** : SonarCloud permet de spécifier la note de fiabilité minimale requise, de A à E. Fixer cette note à A encourage une rigueur maximale dans la détection et la correction des bugs. Une note de fiabilité stricte aide à maintenir un code sans bugs critiques, améliorant ainsi la stabilité de l'application.
+
+* **Examen des Hotspots de Sécurité** : Le paramètre de taux d'examen des hotspots de sécurité peut être ajusté à 100% pour s'assurer que chaque vulnérabilité potentielle identifiée est examinée et adressée. Cela est particulièrement utile dans le contexte de BobApp, où les données des utilisateurs doivent être protégées.
+
+* **Taux de Duplication** : En fixant une limite au taux de duplication (par exemple, 3%), Bob peut réduire la redondance de code, facilitant la maintenance et minimisant le risque d’erreurs dues aux duplications.
+
+**En utilisant ces paramètres de quality gates, Bob peut non seulement garantir une qualité de code optimale, mais aussi adapter les standards de qualité à mesure que les besoins du projet évoluent, améliorant ainsi la sécurité, la maintenabilité, et la performance globale de l’application.**
+
+## 📊 Analyse des metriques SonarCloud et retours utilisateurs
 
 #### Couverture de code frontend
 ![sonar cloud front](.images/front-sonar.png)
@@ -208,6 +193,28 @@ Ajout de KPIs (Key Performance Indicators) au projet via des Quality Gates.
 * **Améliorations via CI/CD** : Le déploiement continu et les quality gates permettront de prévenir ce genre de retours. Grâce aux tests, aux bonnes pratiques de code, et à l’intégration d’outils comme SonarCloud, on pourra minimiser les erreurs, améliorer la performance, et éviter les soucis de qualité.
 
 ![image site bobapp](.images/bobapp.png)
+
+
+## 📈 Analyse Métrique des Couvertures de Code (Frontend et Backend) pour le Projet BobApp
+Les captures d’écran fournissent des informations précises sur la couverture de code des tests pour les parties frontend et backend du projet BobApp. Ces métriques sont cruciales pour évaluer la qualité du code et son niveau de test.
+
+### ⤴️ Couverture de Code Frontend:
+![image screen coverage frontend](.images/front.PNG)
+
+* **Taux de Couverture** : Le taux de couverture pour le frontend est de 83,3%. Ce niveau de couverture est supérieur au seuil recommandé de 80%, ce qui signifie que la plupart des lignes de code sont couvertes par des tests. Ce niveau de couverture est un indicateur positif pour la qualité et la fiabilité du frontend, car il garantit que la majorité des fonctionnalités ont été testées. Cela réduit le risque de bugs non détectés et augmente la confiance dans le code lors de modifications ou d’ajouts de nouvelles fonctionnalités.
+
+* **Équilibre des Sections Testées** : La capture montre que le frontend atteint une couverture relativement homogène à travers ses différents modules, ce qui suggère une bonne cohérence dans les tests. Un tel équilibre est souhaitable, car il signifie que l'application a moins de "zones aveugles" où des erreurs pourraient échapper aux tests.
+
+
+### ⤵️ Couverture de Code Backend
+![image screen back coverage ](.images/back.PNG)
+
+
+* **Taux de Couverture** : La couverture de code du backend est de 38,8%, ce qui est bien en dessous du seuil minimal recommandé de 80%. Ce faible pourcentage signifie qu’une large partie du code backend n’est pas testée comme les **services** par exemple, laissant potentiellement des bugs non détectés et exposant l’application à des régressions. Cela peut également compliquer la maintenance, car le code non couvert est plus difficile à vérifier lors de modifications.
+
+* **Risque de Failles Non Détectées** : Avec une couverture inférieure à 40%, il est probable que plusieurs sections critiques du backend ne soient pas couvertes par des tests. Cela augmente le risque d'introduire des erreurs ou des dysfonctionnements dans les zones non testées, particulièrement dans des fonctionnalités sensibles ou complexes.
+
+* **Impact sur la Stabilité** : Le faible taux de couverture backend peut également impacter la stabilité et la fiabilité de l’ensemble de l'application BobApp, car le backend gère souvent des processus cruciaux. L’ajout de tests supplémentaires est donc fortement recommandé pour améliorer la robustesse et réduire le risque d'incidents en production.
 
 
 ### Avantages de la mise en place de CI/CD
