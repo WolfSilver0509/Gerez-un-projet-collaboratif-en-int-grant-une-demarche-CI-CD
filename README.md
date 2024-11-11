@@ -80,9 +80,106 @@ Le fichier `pom.xml` fourni dans le projet, contient la configuration de JaCoCo.
 
 ## 🌐 Workflow pour le FrontEnd
 
+Ce workflow CI/CD pour le frontend de BobApp est conçu pour automatiser les processus d'intégration continue (CI) et de déploiement continu (CD) en utilisant GitHub Actions. Le but de ce workflow est de garantir que le code frontend est testé, analysé pour sa qualité, et déployé dans des environnements de développement de manière fluide et sécurisée.
+
+**Voici une description détaillée de chaque étape du workflow, des déclencheurs aux jobs exécutés.**
+
+**Déclencheurs**
+Ce workflow est déclenché par deux types d'événements spécifiques :
+
+* Pull Request vers la branche "main" : Lorsqu'une pull request est ouverte vers la branche `main` depuis le dossier `front`, le workflow s'exécute pour valider les modifications et effectuer les tests requis avant toute fusion en production.
+
+* Push sur la branche de développement (commenté dans le code) : Le workflow peut également être déclenché pour les pushs sur une branche `feature/workflow-app` dans le dossier  `front`, ce qui permet de tester pendant le développement.
+
+**Jobs Exécutés**
+Le workflow est divisé en deux principaux jobs :
+
+**Job `Build_Test_Coverage_Analyse`** : Ce job est destiné à gérer la construction du projet frontend, l’exécution des tests unitaires, la génération des rapports de couverture de code, et l'analyse de qualité via SonarCloud. Ce job s'exécute sur une image Ubuntu.
+
+* Configuration : Utilise la dernière version d'Ubuntu et configure Node.js dans la version 14.x pour garantir une compatibilité avec les dépendances Node.
+
+**Étapes :**
+
+* Check-out du code source : Récupère le code source de la branche active pour exécuter les étapes de construction et de tests.
+* Configuration de Node.js : Installe la version 14.x de Node.js et met en cache les dépendances npm, basées sur le fichier `package.json` du frontend.
+* Installation des dépendances npm : Installe les dépendances nécessaires au projet à l’aide de la commande `npm ci`, qui assure une installation propre et rapide.
+* Compilation du projet : Compile le projet avec `npm build` pour préparer l'application.
+* Exécution des tests et génération de la couverture de code : Lancement des tests avec `npm test`, en utilisant Chrome en mode headless pour un environnement d'exécution sans interface utilisateur. Cette étape génère également un rapport de couverture de code, permettant de mesurer le taux de code couvert par les tests.
+* Archivage des résultats de couverture de code : Les rapports de couverture générés sont stockés comme artefacts, permettant aux développeurs de les consulter directement depuis GitHub pour une évaluation postérieure.
+* Analyse de code avec SonarCloud : Effectue un scan du code avec SonarCloud pour évaluer sa qualité, détecter les bugs, les vulnérabilités potentielles, et identifier les zones de code à améliorer.
+
+**Job `DockerLogAndBuild`** : Ce job est conditionnel et ne s'exécute que pour les pull requests vers la branche main. Il se concentre sur la création et la publication d'une image Docker pour le frontend.
+
+* Condition d'exécution : Ce job est configuré pour ne s’exécuter qu’après la réussite du job `Build_Test_Coverage_Analyse` et uniquement pour les pull requests vers `main`.
+
+**Étapes :**
+
+* Check-out du code source : Récupère le code source pour créer l’image Docker.
+* Mise en cache des couches Docker : Utilise un cache pour les couches Docker afin d’optimiser la vitesse des builds successifs. Le cache est basé sur le système d'exploitation et le hash du fichier Dockerfile.
+* Connexion à Docker Hub : Authentifie l'utilisateur sur Docker Hub en utilisant les secrets GitHub pour les informations d’identification. Cela permet de push l'image Docker de manière sécurisée.
+* Construction et push de l'image Docker : Construit l'image Docker du frontend et la tague avec `latest`. Une fois l'image créée, elle est envoyée (push) vers le registre Docker Hub du compte utilisateur, ce qui permet de déployer l'application dans des environnements Docker.
+Récapitulatif des Étapes Clés
+* Construction et Compilation : Prépare le projet en téléchargeant les dépendances et en construisant le code.
+* Tests et Couverture de Code : Exécute les tests unitaires et génère des rapports de couverture, permettant de s'assurer que le code est robuste et de haute qualité.
+* Analyse SonarCloud : Utilise SonarCloud pour une analyse approfondie de la qualité, couvrant la sécurité, la fiabilité, et la maintenabilité du code.
+* Création et Publication de l'Image Docker : Permet un déploiement continu et rapide en créant une image Docker standardisée pour le frontend.
+
+### Avantages du Workflow CI/CD Frontend
+L’implémentation de ce workflow CI/CD offre plusieurs avantages pour BobApp :
+
+**Qualité et Fiabilité : Grâce aux tests automatisés et à l’analyse SonarCloud, ce workflow garantit une haute qualité de code, réduisant les risques de bugs et améliorant la maintenabilité.
+Déploiement Continu et Rapide : Avec Docker, le frontend est prêt à être déployé dans un environnement de production ou de développement en quelques minutes.
+Optimisation du Temps de Développement : La mise en cache des dépendances npm et des couches Docker accélère les builds successifs, réduisant le temps d'exécution total et améliorant l'efficacité.**
+
+
 
 ## 🧭 Workflow pour le BackEnd
 
+Ce workflow CI/CD pour le backend de BobApp utilise GitHub Actions pour automatiser les processus d'intégration continue (CI) et de déploiement continu (CD). Son objectif est d'assurer que le code backend est testé, analysé pour la qualité, et préparé pour le déploiement en créant une image Docker.
+
+**Voici une description détaillée des déclencheurs, jobs, et étapes de ce workflow.**
+
+**Déclencheurs**
+Ce workflow est déclenché par des événements spécifiques :
+
+* Pull Request vers la branche "main" : Lorsqu'une pull request est ouverte vers la branche main dans le dossier back, le workflow s'exécute pour valider les modifications, effectuer les tests, et évaluer la qualité du code avant toute fusion dans la branche principale.
+
+* Push sur la branche de développement (commenté dans le code) : Le workflow est également configuré pour être déclenché sur des pushs vers la branche feature/workflow dans le dossier back, permettant ainsi de tester pendant la phase de développement.
+
+**Jobs Exécutés**
+Le workflow se compose de deux jobs principaux :
+
+**Job  `Build_Test_Coverage_Analyse`** : Ce job exécute les étapes de construction, tests unitaires, génération de rapports de couverture de code avec JaCoCo, et analyse de qualité avec SonarCloud. Il s'exécute sur une image Ubuntu pour assurer un environnement standardisé.
+
+* Configuration : Le job utilise la version 17 de Java (JDK 17) pour une compatibilité avec les versions récentes de Java.
+
+**Étapes :**
+
+* Check-out du code source : Récupère le code source du dépôt GitHub, permettant d’exécuter les étapes de tests et d’analyse sur la dernière version du code.
+* Configuration de Java JDK 17 : Installe et configure `Java JDK 17` pour exécuter le backend de BobApp, et met en cache les packages Maven pour accélérer les builds successifs.
+* Mise en cache des packages Maven : Utilise un cache pour les dépendances Maven, basé sur le fichier `pom.xml`, afin de réduire le temps des builds en réutilisant les dépendances déjà téléchargées.
+* Exécution des tests et génération du rapport de couverture `JaCoCo` : Exécute les tests unitaires avec Maven (mvn clean test) et génère un rapport de couverture de code avec `JaCoCo` pour mesurer la couverture de tests.
+* Archivage du rapport de couverture JaCoCo : Le rapport généré est stocké comme artefact, permettant aux développeurs de le consulter directement dans GitHub pour évaluer la couverture de code.
+* Mise en cache des packages SonarCloud : Met en cache les packages SonarCloud pour optimiser la vitesse de l'analyse.
+* Construction et analyse de qualité avec SonarCloud : Exécute l'analyse SonarCloud pour évaluer la qualité du code backend, en identifiant les bugs, les vulnérabilités, et les duplications de code, permettant ainsi d’améliorer la qualité et la maintenabilité.
+
+**Job `DockerLogAndBuild`**: Ce job est conditionnel et s’exécute uniquement pour les pull requests vers la branche main. Il se concentre sur la création et la publication d'une image Docker pour le backend de l'application.
+
+* Condition d'exécution : Ce job est configuré pour dépendre du succès du job `Build_Test_Coverage_Analyse` et pour ne s'exécuter que pour les pull requests vers main.
+
+**Étapes :**
+
+* Check-out du code source : Récupère le code source pour le job Docker, garantissant que l'image Docker est construite avec la dernière version du code.
+* Mise en cache des couches Docker : Utilise un cache pour les couches Docker, basé sur le fichier Dockerfile, pour optimiser les builds en réutilisant les couches précédentes lorsque possible.
+* Connexion à Docker Hub : Authentifie l'utilisateur sur Docker Hub en utilisant les secrets GitHub pour sécuriser l'accès. Cela permet de push l'image Docker créée vers le registre Docker Hub.
+* Construction et push de l'image Docker : Construit une image Docker pour le backend et la tague avec `latest`. Ensuite, cette image est envoyée vers Docker Hub, rendant l'application prête pour le déploiement en environnement de production ou de développement.
+
+### Avantages du Workflow CI/CD Backend
+Ce workflow CI/CD backend présente de nombreux avantages pour le projet BobApp :
+
+**Automatisation des Tests et Analyses : Ce workflow garantit que chaque modification du code backend est bien testée et que la qualité du code est analysée avant d'être fusionnée dans la branche principale, améliorant ainsi la fiabilité.
+Déploiement Standardisé avec Docker : Grâce à Docker, le backend est packagé dans un environnement standardisé, réduisant les erreurs de configuration entre développement et production.
+Gain de Temps avec le Cache Maven et Docker : L’utilisation de caches pour Maven et les couches Docker réduit considérablement le temps d'exécution des builds, rendant le processus plus efficace.**
 
 
 ## 📍 Ajout des KPIs (via SonarCloud et des Quality Gates)
@@ -229,3 +326,4 @@ Les captures d’écran fournissent des informations précises sur la couverture
 
 ***En somme, la mise en place de CI/CD, associée à un audit des retours utilisateurs et à une optimisation continue, permettra non seulement de répondre aux critiques actuelles, mais aussi de prévenir les erreurs futures, d'augmenter la satisfaction des utilisateurs, et de garantir un site de haute qualité.***
 
+**by Denizot Myriam**
