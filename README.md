@@ -222,19 +222,39 @@ Ajout de KPIs (Key Performance Indicators) au projet via des Quality Gates.
 | **Taux de duplication**             | ≤ 3%      | Améliore la maintenabilité et réduit les incohérences dans le code.                     |
 
 ## 💪 Possibilités de Modification des Paramètres pour SonarCloud Quality Gates
-Dans SonarCloud, les quality gates offrent une grande flexibilité pour personnaliser les seuils de qualité en fonction des objectifs de l’équipe. Par exemple, Bob peut ajuster les paramètres des quality gates pour répondre aux besoins spécifiques de BobApp et encourager des pratiques de développement plus rigoureuses.
 
-* **Couverture de Tests** : Bob peut configurer le seuil minimal de couverture des tests unitaires, actuellement recommandé à 80%, pour s'assurer que le code est suffisamment vérifié. En ajustant ce pourcentage, il peut s'adapter à l’évolution du projet, notamment en augmentant ce seuil à mesure que la stabilité devient cruciale dans les phases avancées du projet.
+Dans SonarCloud, les Quality Gates offrent une flexibilité importante pour adapter les seuils de qualité aux besoins spécifiques de l’équipe. Par exemple, Bob peut ajuster ces paramètres afin de mieux répondre aux exigences de son projet et de garantir une qualité de code constante. Voici comment chaque paramètre peut être modifié pour améliorer le contrôle qualité :
 
-* **Note de Fiabilité** : SonarCloud permet de spécifier la note de fiabilité minimale requise, de A à E. Fixer cette note à A encourage une rigueur maximale dans la détection et la correction des bugs. Une note de fiabilité stricte aide à maintenir un code sans bugs critiques, améliorant ainsi la stabilité de l'application.
+![sonar cloud front](.images/sonar-quality-gate.PNG)
 
-* **Examen des Hotspots de Sécurité** : Le paramètre de taux d'examen des hotspots de sécurité peut être ajusté à 100% pour s'assurer que chaque vulnérabilité potentielle identifiée est examinée et adressée. Cela est particulièrement utile dans le contexte de BobApp, où les données des utilisateurs doivent être protégées.
+* **Couverture de Tests** : Bob peut configurer le seuil minimal de couverture des tests unitaires, ici recommandé à 80%, pour s'assurer que le code est suffisamment vérifié. Ce pourcentage peut être ajusté en fonction de la maturité du projet, en l'augmentant à mesure que le code devient plus stable et nécessite une couverture plus rigoureuse.
 
-* **Taux de Duplication** : En fixant une limite au taux de duplication (par exemple, 3%), Bob peut réduire la redondance de code, facilitant la maintenance et minimisant le risque d’erreurs dues aux duplications.
+* **Note de Fiabilité** : Dans SonarCloud, il est possible de définir la note minimale requise pour la fiabilité, de A à E. En fixant ce critère à A, Bob garantit un code sans erreurs critiques, ce qui est essentiel pour la stabilité et la maintenabilité de l’application.
+
+* **Examen des Hotspots de Sécurité** : Bob peut configurer le taux d'examen des Hotspots de Sécurité à 100% pour s'assurer que toutes les vulnérabilités potentielles détectées sont révisées et, si nécessaire, corrigées. Cela permet d’éviter des failles de sécurité qui pourraient compromettre la sécurité des utilisateurs.
+
+* **Taux de Duplication** : En limitant le taux de duplication à un maximum de 3%, Bob s'assure que le code est maintenable et minimise le risque d'erreurs provenant de duplications. Ce paramètre aide à garder un code propre et facile à modifier, sans répétitions inutiles.
+
+En adaptant ces critères dans les Quality Gates de SonarCloud, Bob peut non seulement maintenir une qualité de code élevée mais aussi évoluer avec les besoins du projet, tout en améliorant la sécurité, la maintenabilité, et les performances globales de son application.
 
 **En utilisant ces paramètres de quality gates, Bob peut non seulement garantir une qualité de code optimale, mais aussi adapter les standards de qualité à mesure que les besoins du projet évoluent, améliorant ainsi la sécurité, la maintenabilité, et la performance globale de l’application.**
 
-## 📊 Analyse des metriques SonarCloud et retours utilisateurs
+#### ⚡ Pour créer une nouvelle Quality Gate dans SonarCloud, il suffit d'accéder à la section "Portes de qualité" et de cliquer sur le bouton "Créer". Une fois la Quality Gate créée, vous pouvez personnaliser les conditions selon vos besoins en ajoutant des critères de qualité spécifiques, tels que la couverture des tests, le taux de duplication de code, ou encore les évaluations de fiabilité et de sécurité.
+
+Par exemple, comme on le voit sur les captures d'écran fournies :
+
+![sonar cloud front](.images/quality1.PNG)
+
+Modification des Conditions : Dans l'une des captures, on observe la possibilité de définir les seuils des métriques pour une Quality Gate. Ici, on peut spécifier que la Quality Gate échoue si la couverture de tests est inférieure à 80% ou si le taux de duplication dépasse 3%. Vous pouvez ajouter, modifier ou supprimer des conditions en fonction de l'objectif de qualité pour le projet.
+
+![sonar cloud front](.images/quality2.PNG)
+Personnalisation des Critères de Fiabilité et Sécurité : Dans l'autre capture, il est montré comment ajuster la note de fiabilité minimale. Par exemple, il est possible de définir que le niveau de fiabilité doit être au moins de B sur l'exemple, sinon la Quality Gate échouera. Ce type de réglage aide à maintenir une stabilité du code en fixant des standards de fiabilité plus stricts pour le projet.
+
+En configurant soigneusement les valeurs et les seuils de chaque condition dans vos Quality Gates, vous garantissez que le code répond aux exigences de qualité avant d'être intégré, réduisant ainsi les risques de bugs et de vulnérabilités en production.
+
+## 📊 Analyse des metriques 
+
+### Analyse des metriques SonarCloud
 
 #### Couverture de code frontend
 ![sonar cloud front](.images/front-sonar.png)
@@ -259,6 +279,28 @@ Dans SonarCloud, les quality gates offrent une grande flexibilité pour personna
 ***En complément, l’analyse montre qu’il y a 9 nouvelles issues qui nécessitent une attention, et 2 hotspots de sécurité spécifiques à analyser. Aucune duplication de code n’est présente, ce qui est un point positif pour la maintenabilité du projet.***
 
 
+
+### 📈 Analyse Métrique des repports de couvertures pour le Projet BobApp
+
+Les captures d’écran fournissent des informations précises sur la couverture de code des tests pour les parties frontend et backend du projet BobApp. Ces métriques sont cruciales pour évaluer la qualité du code et son niveau de test.
+
+#### ⤴️ Couverture de Code Frontend:
+![image screen coverage frontend](.images/front.PNG)
+
+* **Taux de Couverture** : Le taux de couverture pour le frontend est de 83,3%. Ce niveau de couverture est supérieur au seuil recommandé de 80%, ce qui signifie que la plupart des lignes de code sont couvertes par des tests. Ce niveau de couverture est un indicateur positif pour la qualité et la fiabilité du frontend, car il garantit que la majorité des fonctionnalités ont été testées. Cela réduit le risque de bugs non détectés et augmente la confiance dans le code lors de modifications ou d’ajouts de nouvelles fonctionnalités.
+
+* **Équilibre des Sections Testées** : La capture montre que le frontend atteint une couverture relativement homogène à travers ses différents modules, ce qui suggère une bonne cohérence dans les tests. Un tel équilibre est souhaitable, car il signifie que l'application a moins de "zones aveugles" où des erreurs pourraient échapper aux tests.
+
+
+#### ⤵️ Couverture de Code Backend
+![image screen back coverage ](.images/back.PNG)
+
+
+* **Taux de Couverture** : La couverture de code du backend est de 38,8%, ce qui est bien en dessous du seuil minimal recommandé de 80%. Ce faible pourcentage signifie qu’une large partie du code backend n’est pas testée comme les **services** par exemple, laissant potentiellement des bugs non détectés et exposant l’application à des régressions. Cela peut également compliquer la maintenance, car le code non couvert est plus difficile à vérifier lors de modifications.
+
+* **Risque de Failles Non Détectées** : Avec une couverture inférieure à 40%, il est probable que plusieurs sections critiques du backend ne soient pas couvertes par des tests. Cela augmente le risque d'introduire des erreurs ou des dysfonctionnements dans les zones non testées, particulièrement dans des fonctionnalités sensibles ou complexes.
+
+* **Impact sur la Stabilité** : Le faible taux de couverture backend peut également impacter la stabilité et la fiabilité de l’ensemble de l'application BobApp, car le backend gère souvent des processus cruciaux. L’ajout de tests supplémentaires est donc fortement recommandé pour améliorer la robustesse et réduire le risque d'incidents en production.
 
 #### 🙋‍♂️ Retours utilisateurs 👥
 
@@ -290,28 +332,6 @@ Dans SonarCloud, les quality gates offrent une grande flexibilité pour personna
 * **Améliorations via CI/CD** : Le déploiement continu et les quality gates permettront de prévenir ce genre de retours. Grâce aux tests, aux bonnes pratiques de code, et à l’intégration d’outils comme SonarCloud, on pourra minimiser les erreurs, améliorer la performance, et éviter les soucis de qualité.
 
 ![image site bobapp](.images/bobapp.png)
-
-
-## 📈 Analyse Métrique des Couvertures de Code (Frontend et Backend) pour le Projet BobApp
-Les captures d’écran fournissent des informations précises sur la couverture de code des tests pour les parties frontend et backend du projet BobApp. Ces métriques sont cruciales pour évaluer la qualité du code et son niveau de test.
-
-### ⤴️ Couverture de Code Frontend:
-![image screen coverage frontend](.images/front.PNG)
-
-* **Taux de Couverture** : Le taux de couverture pour le frontend est de 83,3%. Ce niveau de couverture est supérieur au seuil recommandé de 80%, ce qui signifie que la plupart des lignes de code sont couvertes par des tests. Ce niveau de couverture est un indicateur positif pour la qualité et la fiabilité du frontend, car il garantit que la majorité des fonctionnalités ont été testées. Cela réduit le risque de bugs non détectés et augmente la confiance dans le code lors de modifications ou d’ajouts de nouvelles fonctionnalités.
-
-* **Équilibre des Sections Testées** : La capture montre que le frontend atteint une couverture relativement homogène à travers ses différents modules, ce qui suggère une bonne cohérence dans les tests. Un tel équilibre est souhaitable, car il signifie que l'application a moins de "zones aveugles" où des erreurs pourraient échapper aux tests.
-
-
-### ⤵️ Couverture de Code Backend
-![image screen back coverage ](.images/back.PNG)
-
-
-* **Taux de Couverture** : La couverture de code du backend est de 38,8%, ce qui est bien en dessous du seuil minimal recommandé de 80%. Ce faible pourcentage signifie qu’une large partie du code backend n’est pas testée comme les **services** par exemple, laissant potentiellement des bugs non détectés et exposant l’application à des régressions. Cela peut également compliquer la maintenance, car le code non couvert est plus difficile à vérifier lors de modifications.
-
-* **Risque de Failles Non Détectées** : Avec une couverture inférieure à 40%, il est probable que plusieurs sections critiques du backend ne soient pas couvertes par des tests. Cela augmente le risque d'introduire des erreurs ou des dysfonctionnements dans les zones non testées, particulièrement dans des fonctionnalités sensibles ou complexes.
-
-* **Impact sur la Stabilité** : Le faible taux de couverture backend peut également impacter la stabilité et la fiabilité de l’ensemble de l'application BobApp, car le backend gère souvent des processus cruciaux. L’ajout de tests supplémentaires est donc fortement recommandé pour améliorer la robustesse et réduire le risque d'incidents en production.
 
 
 ### Avantages de la mise en place de CI/CD
